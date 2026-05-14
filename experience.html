@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Kasastay · Avant-première — la soirée du 30 mai</title>
+<meta name="description" content="Avant-première immersive de la soirée de lancement Kasastay à Borelie, Douala." />
+<meta name="theme-color" content="#0a0a0c" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:        #fafafa;
+  --ink-soft:   rgba(250,250,250,.78);
+  --ink-mute:   rgba(250,250,250,.55);
+  --ink-faint:  rgba(250,250,250,.32);
+  --brand:      #0e7490;
+  --brand-bright:#08BDB7;
+  --night:      #0a0a0c;
+  --night-2:    #18181b;
+  --night-3:    #27272a;
+  --f-sans:     "Geist", system-ui, sans-serif;
+  --f-mono:     "Geist Mono", ui-monospace, monospace;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html, body{
+  margin:0; padding:0;
+  background:var(--night);
+  color:var(--ink);
+  font-family:var(--f-sans);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+html{
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: none;
+}
+body{ overflow-x:hidden; }
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; cursor:pointer; border:0; background:none; color:inherit; }
+::selection{ background:var(--brand-bright); color:var(--night); }
+
+/* fixed grain overlay */
+body::after{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:60;
+  opacity:.35;
+  mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/></svg>");
+}
+
+/* ─── Chrome ─────────────────────────────── */
+.nav-bar{
+  position:fixed; top:0; left:0; right:0;
+  z-index:70;
+  padding:18px 24px;
+  display:flex; justify-content:space-between; align-items:center;
+  background:linear-gradient(180deg, rgba(10,10,12,.7) 0%, transparent 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.nav-back{
+  display:inline-flex; align-items:center; gap:8px;
+  color:var(--ink-soft);
+  font-family:var(--f-mono);
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  transition:color .2s, transform .25s;
+}
+.nav-back:hover{ color:var(--brand-bright); transform:translateX(-2px); }
+.nav-brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--f-sans);
+  font-weight:700;
+  font-size:15px;
+  letter-spacing:-.02em;
+  color:var(--ink);
+}
+.nav-brand .icon{ height:22px; color:var(--brand-bright); }
+
+.audio-toggle{
+  position:fixed; top:18px; right:80px;
+  z-index:70;
+  width:36px; height:36px;
+  display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid rgba(250,250,250,.18);
+  border-radius:50%;
+  color:var(--ink-mute);
+  transition:border-color .2s, color .2s, background .2s;
+}
+.audio-toggle:hover{ border-color:var(--brand-bright); color:var(--brand-bright); }
+.audio-toggle svg{ width:14px; height:14px; }
+@media (max-width: 600px){ .audio-toggle{ display:none; } }
+
+/* progress rail */
+.progress-rail{
+  position:fixed; top:50%; right:24px;
+  transform:translateY(-50%);
+  z-index:60;
+  display:flex; flex-direction:column; gap:18px;
+}
+.progress-rail .dot{
+  width:6px; height:6px; border-radius:50%;
+  background:rgba(250,250,250,.22);
+  position:relative;
+  transition: background .3s, transform .3s;
+  cursor:pointer;
+}
+.progress-rail .dot::after{
+  content:attr(data-label);
+  position:absolute; right:calc(100% + 14px); top:50%;
+  transform:translateY(-50%);
+  font-family:var(--f-mono);
+  font-size:10px;
+  letter-spacing:.18em;
+  white-space:nowrap;
+  color:var(--brand-bright);
+  opacity:0;
+  transition: opacity .3s;
+  pointer-events:none;
+}
+.progress-rail .dot:hover::after,
+.progress-rail .dot.active::after{ opacity:1; }
+.progress-rail .dot.active{
+  background:var(--brand-bright);
+  transform:scale(1.8);
+  box-shadow:0 0 0 4px rgba(8,189,183,.18);
+}
+@media (max-width: 600px){
+  .progress-rail{ right:14px; gap:14px; }
+  .progress-rail .dot{ width:5px; height:5px; }
+  .progress-rail .dot::after{ display:none; }
+}
+
+/* scroll hint */
+.scroll-hint{
+  position:fixed; bottom:22px; left:50%;
+  transform:translateX(-50%);
+  z-index:60;
+  font-family:var(--f-mono);
+  font-size:9px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+  transition:opacity .8s;
+}
+.scroll-hint .line{
+  width:1px; height:32px;
+  background:linear-gradient(180deg, var(--brand-bright), transparent);
+  animation:lineDrop 2s ease-in-out infinite;
+}
+@keyframes lineDrop{
+  0%   { transform:scaleY(.2); transform-origin:top; }
+  50%  { transform:scaleY(1);  transform-origin:top; }
+  100% { transform:scaleY(.2); transform-origin:bottom; }
+}
+
+/* ─── SCENES ─────────────────────────────── */
+.scene{
+  height:100vh;
+  scroll-snap-align: start;
+  position:relative;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:0 8vw;
+  overflow:hidden;
+}
+.scene > *{ position:relative; z-index:5; }
+
+.scene-num{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--brand-bright);
+  margin-bottom:22px;
+  opacity:0;
+  display:inline-flex; align-items:center; gap:14px;
+}
+.scene-num::before{ content:""; width:36px; height:1px; background:currentColor; }
+.scene.is-visible .scene-num{ animation:slideIn 1s cubic-bezier(.2,.7,.2,1) forwards; }
+
+.scene-title{
+  font-family:var(--f-sans);
+  font-weight:200;
+  font-size:clamp(54px, 9vw, 132px);
+  line-height:.95;
+  letter-spacing:-.04em;
+  margin:0 0 28px;
+  max-width:14ch;
+  color:var(--ink);
+  opacity:0;
+}
+.scene-title em{
+  font-style:normal;
+  color:var(--brand-bright);
+  font-weight:300;
+}
+.scene.is-visible .scene-title{ animation:slideIn 1.2s cubic-bezier(.2,.7,.2,1) .15s forwards; }
+
+.scene-lede{
+  font-family:var(--f-sans);
+  font-weight:300;
+  font-size:clamp(15px, 1.5vw, 19px);
+  line-height:1.55;
+  color:var(--ink-soft);
+  max-width:52ch;
+  margin:0 0 36px;
+  opacity:0;
+}
+.scene.is-visible .scene-lede{ animation:slideIn 1.3s cubic-bezier(.2,.7,.2,1) .3s forwards; }
+
+.scene-meta{
+  display:flex; gap:28px; flex-wrap:wrap;
+  font-family:var(--f-mono);
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  opacity:0;
+}
+.scene-meta span b{ color:var(--brand-bright); font-weight:700; }
+.scene.is-visible .scene-meta{ animation:slideIn 1.4s cubic-bezier(.2,.7,.2,1) .45s forwards; }
+
+@keyframes slideIn{
+  from{ opacity:0; transform:translateY(28px); }
+  to  { opacity:1; transform:translateY(0); }
+}
+
+/* live badge */
+.live-badge{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:4px 10px;
+  background:rgba(8,189,183,.12);
+  border:1px solid rgba(8,189,183,.4);
+  border-radius:999px;
+  color:var(--brand-bright);
+  font-family:var(--f-mono);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.2em;
+  margin-left:16px;
+}
+.live-badge::before{
+  content:"";
+  width:6px; height:6px;
+  border-radius:50%;
+  background:var(--brand-bright);
+  box-shadow:0 0 0 0 rgba(8,189,183,.6);
+  animation:livePulse 1.6s ease-out infinite;
+}
+@keyframes livePulse{
+  0%  { box-shadow:0 0 0 0 rgba(8,189,183,.6); }
+  100%{ box-shadow:0 0 0 8px rgba(8,189,183,0); }
+}
+
+/* ─── SCENE ATMOSPHERES (CSS only) ───────── */
+
+/* RC — warm welcome glow + light dust */
+.scene-rc{
+  background:
+    radial-gradient(80% 60% at 50% 110%, rgba(245,180,80,.35), transparent 60%),
+    radial-gradient(40% 60% at 10% 80%, rgba(245,180,80,.12), transparent 70%),
+    var(--night);
+}
+.scene-rc::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(2px 2px at 20% 30%, rgba(245,180,80,.5), transparent),
+    radial-gradient(2px 2px at 65% 50%, rgba(245,180,80,.4), transparent),
+    radial-gradient(2px 2px at 80% 20%, rgba(245,180,80,.45), transparent),
+    radial-gradient(2px 2px at 35% 75%, rgba(245,180,80,.5), transparent),
+    radial-gradient(1px 1px at 50% 60%, rgba(245,180,80,.3), transparent),
+    radial-gradient(1px 1px at 88% 70%, rgba(245,180,80,.4), transparent);
+  animation:dustDrift 30s linear infinite;
+  pointer-events:none;
+}
+@keyframes dustDrift{
+  from{ transform:translate(0,0); }
+  to  { transform:translate(40px, -30px); }
+}
+
+/* 3F — Studio: grid linen overlay + faint phone-screen glow */
+.scene-3{
+  background:
+    radial-gradient(50% 70% at 80% 50%, rgba(8,189,183,.08), transparent 70%),
+    linear-gradient(180deg, var(--night-2) 0%, var(--night) 100%);
+}
+.scene-3::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 60px, rgba(250,250,250,.018) 60px 61px),
+    repeating-linear-gradient(0deg,  transparent 0 60px, rgba(250,250,250,.018) 60px 61px);
+  pointer-events:none;
+}
+
+/* 4F — LongStay: warm interior radial */
+.scene-4{
+  background:
+    radial-gradient(60% 80% at 85% 50%, rgba(14,116,144,.22), transparent 60%),
+    radial-gradient(40% 60% at 15% 80%, rgba(245,180,80,.08), transparent 70%),
+    var(--night);
+}
+.scene-4::before{
+  content:"";
+  position:absolute; right:-10%; top:30%;
+  width:60%; height:40%;
+  background:radial-gradient(ellipse at center, rgba(14,116,144,.18), transparent 60%);
+  filter:blur(40px);
+  pointer-events:none;
+  animation:slowPulse 6s ease-in-out infinite;
+}
+@keyframes slowPulse{
+  0%,100%{ opacity:.6; }
+  50%   { opacity:1; }
+}
+
+/* 5F — Suite Premium: deep teal-noir, refined */
+.scene-5{
+  background:
+    radial-gradient(60% 80% at 50% 100%, rgba(8,189,183,.15), transparent 60%),
+    linear-gradient(180deg, #0d1f24 0%, var(--night) 100%);
+}
+.scene-5::before{
+  content:"";
+  position:absolute; left:50%; bottom:0;
+  transform:translateX(-50%);
+  width:55%; height:65%;
+  background:
+    radial-gradient(closest-side, rgba(8,189,183,.08), transparent),
+    linear-gradient(180deg, rgba(8,189,183,.04), transparent 60%);
+  pointer-events:none;
+}
+
+/* 6F — Launch: theatrical, spotlights, dramatic */
+.scene-6{
+  background:
+    radial-gradient(50% 60% at 50% 65%, rgba(8,189,183,.25), transparent 70%),
+    linear-gradient(180deg, var(--night) 0%, #052a35 100%);
+}
+.scene-6::before, .scene-6::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  width:60%; height:80%;
+  background:radial-gradient(50% 100% at 50% 100%, rgba(8,189,183,.35), transparent 60%);
+  filter:blur(8px);
+  pointer-events:none;
+  animation:spotPulse 4s ease-in-out infinite;
+}
+.scene-6::before{ left:-10%; transform:rotate(-12deg); transform-origin:bottom center; }
+.scene-6::after{  right:-10%; transform:rotate(12deg);  transform-origin:bottom center; animation-delay:-2s; }
+@keyframes spotPulse{
+  0%,100%{ opacity:.4; }
+  50%   { opacity:.85; }
+}
+
+/* 7F — Pool rooftop: night sky with stars + water shimmer */
+.scene-7{
+  background:
+    linear-gradient(180deg, #021c25 0%, #052e3a 60%, #02161c 100%);
+}
+.scene-7::before{
+  content:"";
+  position:absolute; top:0; left:0; right:0; height:55%;
+  background:
+    radial-gradient(1px 1px at 12% 28%, rgba(255,255,255,.85), transparent),
+    radial-gradient(1px 1px at 38% 14%, rgba(255,255,255,.7), transparent),
+    radial-gradient(2px 2px at 62% 22%, rgba(255,255,255,.9), transparent),
+    radial-gradient(1px 1px at 84% 38%, rgba(255,255,255,.6), transparent),
+    radial-gradient(1px 1px at 22% 44%, rgba(255,255,255,.55), transparent),
+    radial-gradient(2px 2px at 76% 8%, rgba(255,255,255,.8), transparent),
+    radial-gradient(1px 1px at 48% 32%, rgba(255,255,255,.7), transparent);
+  animation:twinkle 4s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+.scene-7::after{
+  content:"";
+  position:absolute; bottom:0; left:0; right:0; height:42%;
+  background:
+    repeating-linear-gradient(0deg, rgba(8,189,183,.06) 0 6px, transparent 6px 12px),
+    linear-gradient(180deg, transparent, rgba(8,189,183,.1));
+  pointer-events:none;
+  animation:ripple 6s ease-in-out infinite;
+}
+@keyframes twinkle{
+  from{ opacity:.5; } to{ opacity:1; }
+}
+@keyframes ripple{
+  0%,100%{ background-position: 0 0; }
+  50%   { background-position: 0 6px; }
+}
+
+/* ─── FINAL CTA SCENE ────────────────────── */
+.scene-end{
+  align-items:center;
+  text-align:center;
+  padding:0 6vw;
+  background:
+    radial-gradient(60% 80% at 50% 50%, rgba(8,189,183,.16), transparent 60%),
+    var(--night);
+}
+.scene-end .scene-title{ max-width:none; text-align:center; }
+.scene-end .scene-lede{ text-align:center; }
+.end-cta{
+  display:inline-flex; align-items:center; gap:14px;
+  padding:20px 32px;
+  background:var(--brand-bright);
+  color:var(--night);
+  border-radius:999px;
+  font-family:var(--f-sans);
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  text-decoration:none;
+  transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, background .25s;
+  box-shadow: 0 0 0 0 rgba(8,189,183,0), 0 12px 30px -8px rgba(8,189,183,.45);
+  opacity:0;
+  position:relative;
+}
+.scene.is-visible .end-cta{ animation:ctaIn 1s cubic-bezier(.2,.7,.2,1) .6s forwards; }
+@keyframes ctaIn{
+  from{ opacity:0; transform:translateY(20px) scale(.96); }
+  to  { opacity:1; transform:translateY(0) scale(1); }
+}
+.end-cta:hover{
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 0 4px rgba(8,189,183,.18), 0 24px 50px -10px rgba(8,189,183,.55);
+}
+.end-cta .arrow{
+  width:30px; height:30px;
+  border-radius:50%;
+  background:var(--night);
+  color:var(--brand-bright);
+  display:inline-flex; align-items:center; justify-content:center;
+}
+.end-cta .arrow svg{ width:14px; height:14px; }
+
+.end-tag{
+  font-family:var(--f-mono);
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  margin-top:24px;
+}
+.end-tag b{ color:var(--brand-bright); font-weight:700; }
+
+/* prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  html{ scroll-snap-type:none; }
+}
+
+/* mobile tweaks */
+@media (max-width: 700px){
+  .scene{ padding:0 24px; }
+  .scene-title{ font-size:46px; }
+  .scene-meta{ gap:18px; font-size:9px; }
+  .nav-bar{ padding:14px 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- reusable Kasastay logo mark -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="kasastay-mark" viewBox="20 5 110 130">
+      <path d="M68.8741 10.2154C78.1336 9.33872 87.6005 11.1602 95.8926 15.274C103.908 19.1855 110.68 25.3224 115.448 32.7408C120.354 40.3615 122.981 49.2636 122.981 58.0982V58.1656C122.981 58.9748 122.98 59.8515 122.911 60.7281C122.427 68.3487 120.147 75.6325 116.969 82.5787C113.928 89.2553 109.921 95.5278 105.498 101.395C101.283 107.06 96.6523 112.388 91.7461 117.446C88.2221 121.088 84.4909 124.595 80.6905 127.966C79.1703 129.315 77.6499 130.664 76.0606 131.878C74.3331 133.226 72.5364 133.159 70.878 131.878C70.8088 131.81 70.6704 131.743 70.5323 131.608C67.7683 129.383 65.1425 127.09 62.5167 124.662C57.6105 120.143 52.912 115.354 48.5586 110.296C43.0997 104.025 37.9859 97.3484 33.8399 90.1324C29.6248 82.9838 26.2383 75.0934 24.7872 66.9332C23.2669 58.2334 23.9586 49.1961 27.2754 40.901C30.7304 32.4712 36.3272 25.2552 43.7208 19.7252C51.0455 14.2625 59.8218 11.0921 68.8741 10.2154ZM75.0245 17.0943C72.8133 17.0269 70.6018 17.0951 68.3907 17.3648C68.1144 17.3648 67.8378 17.4321 67.5616 17.4322C67.0088 17.4997 66.5245 17.6343 65.9717 17.7017C64.9353 17.9041 63.8988 18.1059 62.8624 18.3756C60.8584 18.8477 58.9232 19.5224 56.9883 20.2642C56.8503 20.3316 56.781 20.3316 56.712 20.399C56.5048 20.5338 56.2288 20.6685 56.0215 20.7359C55.5378 20.9383 55.1224 21.2084 54.6387 21.4107C53.7406 21.8153 52.8425 22.2874 51.9444 22.8267C51.1152 23.3663 50.2169 23.9064 49.3877 24.4459C48.9731 24.7831 48.4889 25.053 48.0743 25.3902C47.9363 25.4576 47.8669 25.525 47.7979 25.5924H47.6602C47.5911 25.5924 47.5213 25.6597 47.4522 25.7271C45.7941 27.0083 44.2742 28.357 42.8233 29.8404C42.0633 30.5822 41.3719 31.3243 40.75 32.066C40.5428 32.3358 40.3353 32.5385 40.128 32.8082L40.0586 32.8756V32.8082C39.9896 32.8756 39.9206 32.943 39.8516 33.0777C39.8516 33.1436 39.7853 33.2095 39.7823 33.2125C39.6441 33.4148 39.5064 33.6176 39.3682 33.8199C38.6081 34.899 37.778 36.0454 37.087 37.2594C36.7416 37.7987 36.4655 38.3382 36.1202 38.9449C35.6365 39.8216 35.1529 40.7664 34.7383 41.6432C34.6002 41.9128 34.5307 42.1821 34.3926 42.4517C34.1853 42.9238 33.9781 43.3967 33.8399 43.8687C33.1489 45.757 32.5269 47.7128 32.1124 49.7359C31.9051 50.7473 31.6978 51.6913 31.5596 52.6353C31.4905 52.7028 31.4903 52.8384 31.4903 52.9732C31.4902 53.2428 31.421 53.5123 31.4209 53.7818C31.3518 54.3213 31.2833 54.7941 31.2833 55.2662C31.1451 57.2893 31.1451 59.3125 31.2833 61.3355C31.3523 61.8075 31.3519 62.347 31.4209 62.8189C31.4209 63.0213 31.4903 63.224 31.4903 63.4264V63.359C31.5594 64.303 31.7664 65.3144 31.9737 66.2584C32.3192 68.2141 32.8721 70.0351 33.4249 71.9234C33.9777 73.7443 34.6686 75.5654 35.4288 77.3863C35.4978 77.5212 35.4983 77.5884 35.5674 77.7232V77.7906C35.5674 77.8579 35.6365 77.9254 35.6368 77.9928C35.7059 78.1276 35.7745 78.2633 35.7745 78.2633C35.9817 78.6678 36.1199 79.0726 36.3272 79.4771C36.7418 80.4212 37.157 81.3651 37.6407 82.2418C38.7463 84.3998 39.9203 86.4911 41.1641 88.5142C41.9933 89.9304 42.8919 91.2788 43.7901 92.6275C44.8956 94.3134 46.0705 95.9319 47.2452 97.5504C47.8671 98.3597 48.4895 99.1698 49.1114 99.9791C49.1803 100.046 49.2494 100.114 49.3184 100.249C49.2559 100.188 49.2496 100.182 49.2491 100.181C49.3182 100.249 49.4563 100.451 49.5254 100.518C49.8018 100.923 50.1475 101.327 50.4239 101.665C52.7732 104.564 55.2608 107.397 57.8174 110.094C61.8252 114.343 66.0405 118.457 70.4629 122.369C71.4304 123.178 72.3295 123.987 73.2969 124.796C74.3333 123.987 75.3697 123.111 76.337 122.234C80.2757 118.727 84.076 115.018 87.7383 111.173C90.0186 108.746 92.23 106.318 94.3721 103.755C94.9249 103.148 95.4785 102.474 96.0313 101.799C96.3076 101.462 96.5841 101.125 96.8604 100.788C96.9985 100.653 97.1364 100.518 97.2745 100.316C97.3357 100.256 97.343 100.249 97.3438 100.249C98.3803 98.8324 99.4167 97.4832 100.453 96.067C102.25 93.5717 103.977 91.0761 105.566 88.4459C105.912 87.9064 106.258 87.4346 106.534 86.8951C107.433 85.344 108.331 83.7256 109.16 82.107C109.575 81.2978 109.99 80.4885 110.335 79.6793C110.611 79.2072 110.75 78.8027 110.957 78.398C110.957 78.3307 111.025 78.3303 111.025 78.2633V78.1959C111.025 78.1959 111.095 78.1276 111.095 78.0601C111.164 77.9928 111.164 77.9928 111.164 77.9254C112.615 74.6209 113.721 71.2485 114.55 67.8092C114.757 66.9326 114.964 66.0559 115.103 65.1793C115.172 64.7747 115.241 64.3026 115.31 63.898V63.7633C115.379 63.6285 115.379 63.561 115.379 63.4264C115.586 61.7404 115.656 59.9864 115.587 58.233C115.587 57.2214 115.517 56.1421 115.448 54.9957C115.448 54.5237 115.379 53.9843 115.31 53.4449C115.31 53.1752 115.31 52.9051 115.241 52.6353V52.568C114.965 50.5448 114.55 48.5217 113.928 46.566C113.651 45.6219 113.306 44.6098 112.961 43.6656C112.754 43.1936 112.616 42.7216 112.408 42.2496V42.1822C112.27 41.98 112.132 41.7107 112.063 41.5084C111.372 40.0248 110.611 38.6081 109.782 37.2594C109.575 36.8547 109.367 36.5175 109.091 36.1129C108.538 35.2362 107.985 34.427 107.363 33.6178C107.225 33.4829 107.087 33.3474 107.018 33.2125L106.949 33.1451L106.811 33.0103C106.534 32.6732 106.189 32.2684 105.912 31.9312C104.599 30.3802 103.148 28.8962 101.628 27.5475C100.868 26.8731 100.108 26.1993 99.2784 25.5924C99.2093 25.5249 99.209 25.525 99.209 25.525C99.0018 25.3902 98.7951 25.2545 98.5879 25.1197C98.1734 24.7826 97.7583 24.5134 97.3438 24.2437C95.6163 23.0973 93.8882 22.0853 92.0225 21.2086C91.4698 20.9389 90.9863 20.6687 90.4336 20.4664C90.2264 20.3316 90.0881 20.2643 89.8809 20.1969H89.7422C88.844 19.8597 87.8765 19.5223 86.9092 19.1851C84.8363 18.5108 82.7634 18.039 80.6905 17.6344C80.1377 17.4995 79.6534 17.4323 79.1006 17.3648H79.0323C78.825 17.3648 78.5482 17.2965 78.3409 17.2965C77.2354 17.229 76.1299 17.1618 75.0245 17.0943ZM73.2969 31.19C73.5733 31.19 73.8496 31.19 74.126 31.2574L76.752 33.2125L77.0977 33.483L82.1417 37.3267H82.211V35.3707C82.2111 34.2917 82.9714 33.4148 84.0079 33.2125H93.129C94.1654 33.4148 94.9258 34.2917 94.9258 35.3707V46.9029L98.5186 49.6685L104.393 54.1197L104.807 54.4566C105.359 54.9286 105.636 55.5353 105.705 56.2096C105.705 56.4119 105.637 56.682 105.567 56.8844C105.36 57.4913 104.876 57.9633 104.323 58.1656H98.5186V86.356C98.173 87.0977 97.4128 87.6373 96.5147 87.6373H50.4932C49.2496 87.6372 48.2824 86.6929 48.2823 85.4791V58.0982H42.754C42.2012 57.8959 41.7171 57.4239 41.5098 56.817C41.4407 56.6147 41.3721 56.4119 41.3721 56.1422C41.3722 55.5353 41.6486 54.8612 42.2012 54.4566L42.6163 54.1197L47.3145 50.5445L48.2823 49.8707L52.4288 46.7682L65.212 37.2594L70.2569 33.483L70.6016 33.2125L73.2969 31.19ZM73.4346 36.0455L71.9844 37.192L52.4288 51.8267L49.3877 54.1197H52.4288V83.3883H94.3731V53.984H97.7588L94.2344 51.3541L90.4336 48.5221L84.0762 43.733L75.2315 37.1246L73.5733 35.9107L73.4346 36.0455ZM72.0655 76.0465H62.9014V67.1031H72.0655V76.0465ZM84.1065 67.1031V76.0465H74.9424V67.1031H84.1065ZM72.0655 64.6598H62.9014V55.7164H72.0655V64.6598ZM84.1065 64.6598H74.9424V55.7164H84.1065V64.6598ZM86.7022 40.6314L90.4336 43.4635V37.5289H86.7022V40.6314Z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- fixed chrome -->
+<header class="nav-bar">
+  <a class="nav-back" href="./">
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+    Retour à l'invitation
+  </a>
+  <span class="nav-brand">
+    <svg class="icon" aria-hidden="true"><use href="#kasastay-mark"/></svg>
+    <span>kasastay</span>
+  </span>
+</header>
+
+<button class="audio-toggle" id="audioToggle" type="button" aria-label="Audio">
+  <svg id="audioIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
+</button>
+
+<nav class="progress-rail" aria-label="Étages">
+  <a class="dot active" data-fkey="rc" href="#scene-rc" data-label="RC · 18:30"></a>
+  <a class="dot" data-fkey="3"   href="#scene-3"  data-label="3F · 18:45"></a>
+  <a class="dot" data-fkey="4"   href="#scene-4"  data-label="4F · 19:05"></a>
+  <a class="dot" data-fkey="5"   href="#scene-5"  data-label="5F · 19:25"></a>
+  <a class="dot" data-fkey="6"   href="#scene-6"  data-label="6F · 20:00"></a>
+  <a class="dot" data-fkey="7"   href="#scene-7"  data-label="7F · 21:00"></a>
+  <a class="dot" data-fkey="end" href="#scene-end" data-label="Confirmer"></a>
+</nav>
+
+<span class="scroll-hint" id="scrollHint">
+  Faire défiler
+  <span class="line"></span>
+</span>
+
+<!-- scenes -->
+<main>
+  <section class="scene scene-rc" id="scene-rc" data-fkey="rc">
+    <span class="scene-num">RC · 18:30</span>
+    <h1 class="scene-title">L'<em>accueil</em>.</h1>
+    <p class="scene-lede">
+      Vous arrivez. La lumière est chaude. On connaît déjà votre prénom — votre RSVP nous a précédés.
+      Un cocktail signature, votre carton tamponné, une concierge nommée qui vous prend en charge.
+      L'ascension commence.
+    </p>
+    <div class="scene-meta">
+      <span>Cocktail · <b>signature</b></span>
+      <span>Carton · <b>tamponné</b></span>
+      <span>Concierge · <b>nommée</b></span>
+    </div>
+  </section>
+
+  <section class="scene scene-3" id="scene-3" data-fkey="3">
+    <span class="scene-num">3F · 18:45 — ShortStay</span>
+    <h1 class="scene-title">Le <em>Studio</em>.</h1>
+    <p class="scene-lede">
+      L'hôtesse joue la voyageuse — un homme d'affaires de Yaoundé en escale pour deux nuits.
+      Elle vous montre son écran&nbsp;: réservation confirmée en 60 secondes, payée en Mobile Money, adresse révélée aussitôt.
+    </p>
+    <div class="scene-meta">
+      <span>ShortStay</span>
+      <span>Mobile Money</span>
+      <span>Confirmé · <b>60s</b></span>
+    </div>
+  </section>
+
+  <section class="scene scene-4" id="scene-4" data-fkey="4">
+    <span class="scene-num">4F · 19:05 — LongStay</span>
+    <h1 class="scene-title">Deux chambres,<br><em>trois mois</em>.</h1>
+    <p class="scene-lede">
+      La mère qui s'installe — Kribi → Douala, en relocation pour un trimestre.
+      La cuisine équipée, le quartier vérifié, le tarif dégressif. Le LongStay, pour les vies qui durent plus qu'un week-end.
+    </p>
+    <div class="scene-meta">
+      <span>LongStay</span>
+      <span>Tarif · <b>dégressif</b></span>
+      <span>Quartier · <b>vérifié</b></span>
+    </div>
+  </section>
+
+  <section class="scene scene-5" id="scene-5" data-fkey="5">
+    <span class="scene-num">5F · 19:25 — Premium</span>
+    <h1 class="scene-title">La <em>Suite</em>.</h1>
+    <p class="scene-lede">
+      Le diplomate, l'équipe de tournage, l'exécutif. L'hôtesse joue la concierge — elle parle discrétion, sécurité, vérification de l'hôte.
+      C'est ici que la plateforme montre ce qu'elle a de plus rare.
+    </p>
+    <div class="scene-meta">
+      <span>Commercial</span>
+      <span>Premium</span>
+      <span>Discrétion · <b>totale</b></span>
+    </div>
+  </section>
+
+  <section class="scene scene-6" id="scene-6" data-fkey="6">
+    <span class="scene-num">6F · 20:00 <span class="live-badge">en direct</span></span>
+    <h1 class="scene-title">Le <em>lancement</em>.</h1>
+    <p class="scene-lede">
+      Tous convergent. Les lumières baissent. Le mot du fondateur, court.
+      Puis à <b>20h00 précises</b>, sur l'écran derrière la scène&nbsp;: Kasastay s'ouvre publiquement.
+      Vous êtes les premiers — au monde — à voir la plateforme aller en ligne, en direct.
+    </p>
+    <div class="scene-meta">
+      <span>Mot · <b>court</b></span>
+      <span>Plateforme · <b>live</b></span>
+      <span><b>20:00</b> pile</span>
+    </div>
+  </section>
+
+  <section class="scene scene-7" id="scene-7" data-fkey="7">
+    <span class="scene-num">7F · 21:00 — Rooftop</span>
+    <h1 class="scene-title">La <em>piscine</em>.</h1>
+    <p class="scene-lede">
+      La nuit, la ville en contrebas, l'eau qui réfléchit les ampoules.
+      Boissons, snacks, percussion live. C'est autour du bassin que les vraies conversations Kasastay commencent — entre invités, hôtes, partenaires, fondateurs.
+    </p>
+    <div class="scene-meta">
+      <span>Rooftop</span>
+      <span>Live · <b>jusqu'à tard</b></span>
+      <span>À <b>discrétion</b></span>
+    </div>
+  </section>
+
+  <!-- closing -->
+  <section class="scene scene-end" id="scene-end" data-fkey="end">
+    <span class="scene-num" style="justify-content:center; align-self:center;">— le 30 mai 2026 —</span>
+    <h1 class="scene-title">Vous dormez<br><em>où ce soir ?</em></h1>
+    <p class="scene-lede">Vous savez maintenant à quoi ressemble la nuit.<br>Il reste à confirmer votre place — en moins d'une minute.</p>
+    <a class="end-cta" href="./?rsvp=1">
+      Confirmer ma présence
+      <span class="arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>
+      </span>
+    </a>
+    <span class="end-tag">Borelie · Douala · <b>18h30</b></span>
+  </section>
+</main>
+
+<script>
+/* ─── reveal-on-visible for each scene ─── */
+(function reveal(){
+  const scenes = document.querySelectorAll('.scene');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('is-visible');
+    });
+  }, { threshold: 0.3 });
+  scenes.forEach(s => obs.observe(s));
+})();
+
+/* ─── progress rail sync ─── */
+(function railSync(){
+  const scenes = document.querySelectorAll('.scene[data-fkey]');
+  const dots   = document.querySelectorAll('.progress-rail .dot[data-fkey]');
+  const obs = new IntersectionObserver((entries) => {
+    let best = null, bestRatio = 0;
+    entries.forEach(e => {
+      if (e.isIntersecting && e.intersectionRatio > bestRatio){
+        bestRatio = e.intersectionRatio;
+        best = e.target;
+      }
+    });
+    if (!best) return;
+    const k = best.dataset.fkey;
+    dots.forEach(d => d.classList.toggle('active', d.dataset.fkey === k));
+  }, { threshold: [.4, .6, .8], rootMargin: '-20% 0px -20% 0px' });
+  scenes.forEach(s => obs.observe(s));
+})();
+
+/* ─── hide scroll hint after first scroll ─── */
+(function hideHint(){
+  let hidden = false;
+  function maybeHide(){
+    if (hidden) return;
+    if (window.scrollY > 60){
+      const hint = document.getElementById('scrollHint');
+      if (hint){
+        hint.style.opacity = '0';
+        hint.style.pointerEvents = 'none';
+      }
+      hidden = true;
+    }
+  }
+  window.addEventListener('scroll', maybeHide, { passive: true });
+})();
+
+/* ─── audio toggle (placeholder — no audio source wired yet)
+   TODO: add ambient audio files per scene and crossfade as user scrolls
+─── */
+(function audio(){
+  const btn  = document.getElementById('audioToggle');
+  const icon = document.getElementById('audioIcon');
+  let on = false;
+  btn.addEventListener('click', () => {
+    on = !on;
+    if (on){
+      icon.innerHTML = '<path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/>';
+      btn.style.color = 'var(--brand-bright)';
+      btn.style.borderColor = 'var(--brand-bright)';
+    } else {
+      icon.innerHTML = '<path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/>';
+      btn.style.color = '';
+      btn.style.borderColor = '';
+    }
+  });
+})();
+
+/* ─── keyboard nav (arrows / pageup / pagedown) ─── */
+document.addEventListener('keydown', (e) => {
+  const scenes = Array.from(document.querySelectorAll('.scene'));
+  const current = scenes.findIndex(s => s.classList.contains('is-visible') &&
+    s.getBoundingClientRect().top >= -window.innerHeight/2 &&
+    s.getBoundingClientRect().top <  window.innerHeight/2);
+  let next = current;
+  if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') next = Math.min(scenes.length-1, current+1);
+  if (e.key === 'ArrowUp'   || e.key === 'PageUp') next = Math.max(0, current-1);
+  if (e.key === 'Escape')   window.location.href = 'kasastay-launch.html';
+  if (next !== current && scenes[next]){
+    e.preventDefault();
+    scenes[next].scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+});
+</script>
+</body>
+</html>
