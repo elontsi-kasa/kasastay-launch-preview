@@ -310,7 +310,8 @@ body::after{
   display:inline-block;
   width:36px; height:36px;
   border-radius:50%;
-  background:var(--clay);
+  background:var(--brand-bright);
+  color:var(--ink);
   display:inline-flex; align-items:center; justify-content:center;
 }
 .btn-tour .arrow svg{ width:14px; height:14px; }
@@ -1435,7 +1436,8 @@ body::after{
 .rsvp-submit .arrow{
   width:28px; height:28px;
   border-radius:50%;
-  background:var(--clay);
+  background:var(--brand-bright);
+  color:var(--ink);
   display:inline-flex; align-items:center; justify-content:center;
 }
 .rsvp-submit .arrow svg{ width:12px; height:12px; }
@@ -1571,7 +1573,7 @@ body::after{
   content:"";
   position:absolute; top:0; left:0; right:0;
   height:5px;
-  background:linear-gradient(90deg, var(--brand) 0%, var(--brand-bright) 100%);
+  background:var(--brand-bright);
   z-index:2;
 }
 
@@ -1981,7 +1983,7 @@ body::after{
 
 .floor-row.is-highlight{
   background:linear-gradient(90deg, var(--brand-tint) 0%, transparent 80%);
-  border-left:3px solid var(--brand);
+  border-left:3px solid var(--brand-bright);
   padding-left:21px;
 }
 .floor-row.is-highlight .fr-title{ color:var(--brand-2); }
@@ -2581,12 +2583,12 @@ body::after{
           </div>
           <div class="cd-foot">
             <span>EN&nbsp;DIRECT</span>
-            <span class="venue">depuis la côte atlantique</span>
+            <span class="venue">à Douala</span>
           </div>
 
           <div class="cd-event">
             <div class="row"><span>Date</span><b>Samedi 30 mai 2026</b></div>
-            <div class="row"><span>Accueil</span><b>18:30 · WAT</b></div>
+            <div class="row"><span>Accueil</span><b>16:00 · WAT</b></div>
             <div class="row"><span>Lieu</span><b>Borelie · Douala</b></div>
             <div class="row"><span>Tenue</span><b>Chic décontracté</b></div>
           </div>
@@ -2613,7 +2615,7 @@ body::after{
       <ol class="floors-timeline">
         <li class="floor-row" data-fkey="rc">
           <span class="fr-num">RC</span>
-          <span class="fr-time">18:30</span>
+          <span class="fr-time">16:00</span>
           <div class="fr-body">
             <h3 class="fr-title">L'accueil</h3>
             <p class="fr-desc">Cocktail signature · carton tamponné · concierge personnel</p>
@@ -2621,31 +2623,31 @@ body::after{
         </li>
         <li class="floor-row" data-fkey="3">
           <span class="fr-num">3<sup>e</sup></span>
-          <span class="fr-time">18:45</span>
+          <span class="fr-time">16:15</span>
           <div class="fr-body">
             <h3 class="fr-title">Le Studio</h3>
-            <p class="fr-desc"><em>ShortStay</em> — réservation en 60 secondes, paiement Mobile Money</p>
+            <p class="fr-desc"><em>Confort</em> — linge premium, climatisation, espace pensé jusqu'au moindre détail</p>
           </div>
         </li>
         <li class="floor-row" data-fkey="4">
           <span class="fr-num">4<sup>e</sup></span>
-          <span class="fr-time">19:05</span>
+          <span class="fr-time">16:35</span>
           <div class="fr-body">
             <h3 class="fr-title">L'appartement 2BR</h3>
-            <p class="fr-desc"><em>LongStay</em> — tarif dégressif, séjours d'un mois ou plus</p>
+            <p class="fr-desc"><em>Sécurité</em> — caméras, hôte vérifié, voisinage choisi, support 24/7</p>
           </div>
         </li>
         <li class="floor-row" data-fkey="5">
           <span class="fr-num">5<sup>e</sup></span>
-          <span class="fr-time">19:25</span>
+          <span class="fr-time">16:55</span>
           <div class="fr-body">
             <h3 class="fr-title">La Suite Premium</h3>
-            <p class="fr-desc"><em>Commercial</em> — discrétion totale, hôtes vérifiés, haut-de-gamme</p>
+            <p class="fr-desc"><em>Fiabilité</em> — ce que vous voyez est ce que vous obtenez. Photos vérifiées, prix transparent, sans surprise</p>
           </div>
         </li>
         <li class="floor-row is-highlight" data-fkey="6">
           <span class="fr-num">6<sup>e</sup></span>
-          <span class="fr-time">20:00</span>
+          <span class="fr-time">17:30</span>
           <div class="fr-body">
             <h3 class="fr-title">Le lancement <span class="live-dot"></span></h3>
             <p class="fr-desc">Mot du fondateur — la plateforme s'ouvre publiquement, en direct sur l'écran</p>
@@ -2653,7 +2655,7 @@ body::after{
         </li>
         <li class="floor-row" data-fkey="7">
           <span class="fr-num">7<sup>e</sup></span>
-          <span class="fr-time">21:00</span>
+          <span class="fr-time">18:30</span>
           <div class="fr-body">
             <h3 class="fr-title">La piscine</h3>
             <p class="fr-desc">Rooftop · snacks · live music · jusqu'à tard</p>
@@ -2882,7 +2884,7 @@ body::after{
               </div>
               <div class="pass-cell">
                 <span class="pass-label">Embarquement</span>
-                <span class="pass-value">18:30 WAT</span>
+                <span class="pass-value">16:00 WAT</span>
               </div>
               <div class="pass-cell">
                 <span class="pass-label">Destination</span>
@@ -2966,7 +2968,7 @@ body::after{
    COUNTDOWN to 30 May 2026, 19:00 WAT
    ───────────────────────────────────────────── */
 (function(){
-  const target = new Date('2026-05-30T19:00:00+01:00').getTime();
+  const target = new Date('2026-05-30T16:00:00+01:00').getTime();
   const $d = document.getElementById('cd-d');
   const $h = document.getElementById('cd-h');
   const $m = document.getElementById('cd-m');
@@ -3180,12 +3182,12 @@ document.getElementById('addCal').addEventListener('click', () => {
     'BEGIN:VEVENT',
     'UID:' + (data.passId || 'kasastay-2026') + '@kasastay.com',
     'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z',
-    'DTSTART:20260530T173000Z',
-    'DTEND:20260530T230000Z',
+    'DTSTART:20260530T150000Z',
+    'DTEND:20260530T220000Z',
     'SUMMARY:Kasastay — Lancement officiel',
     'LOCATION:Borelie\\, Douala\\, Cameroun',
     'DESCRIPTION:Vous dormez où ce soir ? Le lancement officiel de Kasastay.\\n\\n' +
-      'Accueil 18h30 · Lancement 20h00 · Rooftop 21h00\\n' +
+      'Accueil 16h00 · Lancement 17h30 · Rooftop 18h30\\n' +
       'Tenue: chic décontracté\\n' +
       'Invités: ' + guests + '\\n' +
       'Réf: ' + (data.passId || ''),
