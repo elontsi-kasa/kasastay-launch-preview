@@ -2167,18 +2167,47 @@ body::before{
   font-weight:700;
 }
 
-@media (max-width: 600px){
-  .soiree{ padding:48px 0 56px; }
-  .soiree-head{ margin-bottom:22px; }
+@media (max-width: 720px){
+  .soiree{ padding:64px 0 64px; }
+  .soiree-head{ margin-bottom:32px; }
+  .soiree-title{ font-size:clamp(38px, 9vw, 56px); }
+  .soiree-lede{ font-size:15px; }
+  .floors-timeline{ padding-left:22px; }
+  /* stack vertically on mobile so descriptions get the full row width */
   .floor-row{
-    grid-template-columns:48px 56px 1fr;
-    gap:12px;
-    padding:14px 16px;
+    display:block;
+    padding:22px 0 24px;
   }
-  .floor-row.is-highlight{ padding-left:13px; }
-  .fr-num{ font-size:21px; }
-  .fr-title{ font-size:14px; }
-  .fr-desc{ font-size:12px; }
+  .fr-num{
+    display:inline-block;
+    vertical-align:baseline;
+    font-size:34px;
+    line-height:1;
+    margin-right:14px;
+  }
+  .fr-time{
+    display:inline-block;
+    vertical-align:baseline;
+    font-size:11px;
+    letter-spacing:.16em;
+  }
+  .fr-body{
+    margin-top:12px;
+    padding-top:0;
+  }
+  .fr-title{ font-size:19px; margin-bottom:4px; }
+  .fr-desc{ font-size:14px; max-width:none; }
+  .floor-row::before{
+    left:-22px; top:30px;
+    width:7px; height:7px;
+  }
+  .floor-row.is-highlight{
+    padding-left:14px;
+    margin-left:-14px;
+  }
+  .floors-timeline::before{
+    left:0; top:24px; bottom:24px;
+  }
 }
 
 /* immersive experience CTA — sits below the timeline */
