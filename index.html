@@ -11,7 +11,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" defer></script>
+<script type="module">
+  /* qrcode@1.5.3 ships only as Node modules — use jsDelivr's +esm bundler to get
+     a browser-ready ESM build, then expose it as window.QRCode for our inline code. */
+  import QRCode from 'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/+esm';
+  window.QRCode = QRCode;
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 
 <style>
@@ -3110,7 +3115,6 @@ document.querySelectorAll('.btn-tour').forEach(b => {
                         verification — click the link Formsubmit sends)
    ───────────────────────────────────────────── */
 const RSVP_KEY = 'kasastay.launch2026.rsvp';
-const RSVP_ENDPOINT = 'https://formsubmit.co/ajax/support@kasastay.com';
 
 const $rsvp        = document.getElementById('rsvp');
 const $rsvpForm    = document.getElementById('rsvpForm');
@@ -3137,46 +3141,62 @@ function saveRsvp(data){
 }
 function clearRsvp(){ localStorage.removeItem(RSVP_KEY); }
 
-/* Fire-and-forget POST to Formsubmit.co — emails the RSVP to support@kasastay.com.
-   If the network is slow/down, the guest still gets their boarding pass from localStorage.
-   We surface a "submittedRemote" flag so the success view could show a sync state if needed. */
-async function sendRsvpEmail(data){
+/* Fire-and-forget submit to Formsubmit.co — emails the RSVP to support@kasastay.com.
+   Uses a hidden iframe + form POST (NOT fetch) to avoid CORS preflight, which
+   Formsubmit's AJAX endpoint doesn't permit from custom origins. The page state
+   is preserved because the form response is captured by the hidden iframe.
+   Failures don't block the guest — they still get their boarding pass locally. */
+function sendRsvpEmail(data){
   const guests = data.plusOne ? 2 : 1;
-  const body = {
-    _subject: `Nouvelle RSVP — ${data.name}`,
-    _captcha: 'false',
-    _template: 'table',
-    Nom: data.name,
-    WhatsApp: '+237 ' + (data.phone || ''),
-    Email: data.email || '(non fourni)',
-    Accompagne: data.plusOne ? `Oui — ${data.plusOneName || '(nom à venir)'}` : 'Non',
-    Personnes: guests,
-    Reference: data.passId || '',
-    Soumis_le: new Date().toLocaleString('fr-FR', { timeZone: 'Africa/Douala' })
+  const fields = {
+    _subject:    `Nouvelle RSVP — ${data.name}`,
+    _captcha:    'false',
+    _template:   'table',
+    _next:       location.href,        // ignored visually since iframe target
+    Nom:         data.name,
+    WhatsApp:    '+237 ' + (data.phone || ''),
+    Email:       data.email || '(non fourni)',
+    Accompagne:  data.plusOne ? `Oui — ${data.plusOneName || '(nom à venir)'}` : 'Non',
+    Personnes:   String(guests),
+    Reference:   data.passId || '',
+    Soumis_le:   new Date().toLocaleString('fr-FR', { timeZone: 'Africa/Douala' })
   };
-  try{
-    const res = await fetch(RSVP_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
-    if (!res.ok){
-      console.warn('[RSVP] Formsubmit returned', res.status);
-      return false;
-    }
-    /* mark the local record as synced so we don't double-send if they re-submit */
-    const stored = getRsvp() || {};
-    stored.submittedRemote = true;
-    saveRsvp(stored);
-    return true;
-  } catch(e){
-    /* network failure — guest still has their pass locally; nothing to show them */
-    console.warn('[RSVP] Submit failed:', e);
-    return false;
-  }
+
+  /* unique target name so multiple submissions don't collide */
+  const targetName = 'rsvp-sink-' + Date.now();
+
+  const iframe = document.createElement('iframe');
+  iframe.name = targetName;
+  iframe.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;border:0;';
+  document.body.appendChild(iframe);
+
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = 'https://formsubmit.co/support@kasastay.com';
+  form.target = targetName;
+  form.style.display = 'none';
+  form.acceptCharset = 'UTF-8';
+
+  Object.entries(fields).forEach(([k, v]) => {
+    const input = document.createElement('input');
+    input.type  = 'hidden';
+    input.name  = k;
+    input.value = v;
+    form.appendChild(input);
+  });
+
+  document.body.appendChild(form);
+  form.submit();
+
+  /* mark local record as synced (best-effort — we can't observe the actual delivery) */
+  const stored = getRsvp() || {};
+  stored.submittedRemote = true;
+  saveRsvp(stored);
+
+  /* cleanup the orphan iframe + form after Formsubmit has time to respond */
+  setTimeout(() => {
+    try { form.remove(); iframe.remove(); } catch(e) {}
+  }, 8000);
 }
 
 function openRsvpModal(forceView){
