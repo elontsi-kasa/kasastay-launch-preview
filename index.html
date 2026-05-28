@@ -3099,7 +3099,7 @@ body.is-staff-mode .rsvp{ display:none !important; }
         </h1>
 
         <p class="sub fade-in delay-2">
-          Le 30 mai, à Borelie, nous ouvrons les portes pour le lancement officiel de <em>Kasastay</em>. Six étages, une nuit, une plateforme qui s'ouvre au monde — et votre place gardée.
+          Le 30 mai, à Borelie, nous ouvrons les portes pour le lancement officiel de <em>Kasastay</em>. Six étages, une nuit, une plateforme qui s'ouvre au monde, et votre place gardée.
         </p>
 
         <div class="countdown fade-in delay-3" id="countdown" aria-live="polite">
@@ -3145,7 +3145,7 @@ body.is-staff-mode .rsvp{ display:none !important; }
         <div class="section-tag">La soirée</div>
         <h2 class="soiree-title">Six étages. <em>Une ascension.</em></h2>
         <p class="soiree-lede">
-          À <em>Borelie</em>, le 30 mai, vous montez. Trois appartements, une salle de lancement, une piscine — environ une heure et demie à vivre.
+          À <em>Borelie</em>, le 30 mai, vous montez. Trois appartements, une salle de lancement, une piscine. Environ une heure et demie à vivre.
         </p>
       </header>
 
@@ -3202,13 +3202,13 @@ body.is-staff-mode .rsvp{ display:none !important; }
 
       <p class="soiree-note-small">
         <span class="note-tag">Note</span>
-        L'ordre des étages 3, 4, 5 peut varier selon votre vague d'arrivée — votre concierge vous guide d'un appartement à l'autre.
+        L'ordre des étages 3, 4, 5 peut varier selon votre vague d'arrivée. Votre concierge vous guide d'un appartement à l'autre.
       </p>
 
       <a class="experience-cta" href="experience.html">
         <span class="ec-eyebrow">Avant-première · 60 secondes</span>
         <span class="ec-title">Vivre la soirée<br><em>en immersion</em></span>
-        <span class="ec-sub">Une descente cinématique étage par étage — son, lumière, atmosphère.</span>
+        <span class="ec-sub">Une descente cinématique étage par étage : son, lumière, atmosphère.</span>
         <span class="ec-arrow" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </span>
@@ -3868,7 +3868,7 @@ document.getElementById('addCal').addEventListener('click', () => {
     'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z',
     'DTSTART:20260530T150000Z',
     'DTEND:20260530T220000Z',
-    'SUMMARY:Kasastay — Lancement officiel',
+    'SUMMARY:Kasastay · Lancement officiel',
     'LOCATION:Borelie\\, Douala\\, Cameroun',
     'DESCRIPTION:Vous dormez où ce soir ? Le lancement officiel de Kasastay.\\n\\n' +
       'Accueil 16h00 · Lancement 17h30 · Rooftop 18h30\\n' +
@@ -3892,11 +3892,11 @@ document.getElementById('addCal').addEventListener('click', () => {
 document.getElementById('sharePass').addEventListener('click', async () => {
   const btn = document.getElementById('sharePass');
   const lbl = document.getElementById('shareLabel');
-  const text = 'Je serai au lancement de Kasastay — le 30 mai à Borelie, Douala. Vous dormez où ce soir ?';
+  const text = 'Je serai au lancement de Kasastay le 30 mai à Borelie, Douala. Vous dormez où ce soir ?';
   const url  = inviteUrl();
   if (navigator.share){
     try{
-      await navigator.share({ title: 'Kasastay — Lancement officiel', text, url });
+      await navigator.share({ title: 'Kasastay · Lancement officiel', text, url });
       return;
     } catch(e){ /* user cancelled, fall through to WhatsApp */ }
   }
@@ -4335,7 +4335,7 @@ document.getElementById('copyLinkBtn').addEventListener('click', async () => {
       lbl.textContent = 'Copier le lien';
     }, 1800);
   } catch(e){
-    lbl.textContent = 'Échec — copiez manuellement';
+    lbl.textContent = 'Échec, copiez manuellement';
   }
 });
 
