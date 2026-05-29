@@ -1,0 +1,1026 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Kasastay · Tombola · 30 mai</title>
+<meta name="description" content="Tirage au sort de la soirée de lancement Kasastay." />
+<meta name="theme-color" content="#0a0a0c" />
+<meta name="robots" content="noindex, nofollow" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:        #fafafa;
+  --ink-soft:   rgba(250,250,250,.78);
+  --ink-mute:   rgba(250,250,250,.55);
+  --ink-faint:  rgba(250,250,250,.32);
+  --brand:      #0e7490;
+  --brand-bright:#08BDB7;
+  --gold:       #f5b450;
+  --night:      #0a0a0c;
+  --night-2:    #18181b;
+  --night-3:    #27272a;
+  --f-sans:     "Geist", system-ui, sans-serif;
+  --f-mono:     "Geist Mono", ui-monospace, monospace;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html, body{
+  margin:0; padding:0;
+  background:var(--night);
+  color:var(--ink);
+  font-family:var(--f-sans);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; cursor:pointer; border:0; background:none; color:inherit; }
+input{ font:inherit; color:inherit; background:none; border:0; outline:0; }
+::selection{ background:var(--brand-bright); color:var(--night); }
+
+/* atmosphere */
+body{
+  background:
+    radial-gradient(70% 80% at 50% 35%, rgba(8,189,183,.16), transparent 60%),
+    radial-gradient(40% 60% at 15% 90%, rgba(245,180,80,.06), transparent 70%),
+    linear-gradient(180deg, #0c1f24 0%, var(--night) 80%);
+}
+body::after{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:60;
+  opacity:.22;
+  mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/></svg>");
+}
+
+/* nav */
+.nav-bar{
+  position:fixed; top:0; left:0; right:0;
+  z-index:70;
+  padding:18px 24px;
+  display:flex; justify-content:space-between; align-items:center;
+  background:linear-gradient(180deg, rgba(10,10,12,.7) 0%, transparent 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:opacity .4s;
+}
+.nav-back{
+  display:inline-flex; align-items:center; gap:8px;
+  color:var(--ink-soft);
+  font-family:var(--f-mono);
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  transition:color .2s, transform .25s;
+}
+.nav-back:hover{ color:var(--brand-bright); transform:translateX(-2px); }
+.nav-brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--f-sans);
+  font-weight:700;
+  font-size:15px;
+  letter-spacing:-.02em;
+  color:var(--ink);
+}
+.nav-brand .icon{ width:19px; height:22px; color:var(--brand-bright); flex-shrink:0; }
+.nav-brand .tag{
+  font-family:var(--f-mono);
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--brand-bright);
+  font-weight:400;
+  padding:3px 8px;
+  border:1px solid rgba(8,189,183,.35);
+  border-radius:999px;
+  margin-left:8px;
+}
+
+/* layout — single screen, no scroll */
+main{
+  height:100vh;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  padding-top:68px;
+  padding-bottom:50px;
+}
+
+/* slogan */
+.slogan{
+  margin:0 0 8px;
+  text-align:center;
+  font-family:var(--f-sans);
+  font-weight:200;
+  font-size:clamp(18px, 1.9vw, 26px);
+  letter-spacing:-.02em;
+  line-height:1.1;
+  color:var(--ink-soft);
+  position:relative; z-index:2;
+}
+.slogan em{
+  font-style:normal;
+  color:var(--brand-bright);
+  font-weight:300;
+}
+
+/* controls */
+.controls{
+  display:flex; justify-content:center; align-items:flex-end; gap:14px;
+  padding:10px 24px 0;
+  flex-wrap:wrap;
+}
+.field{ display:inline-flex; flex-direction:column; gap:6px; }
+.field label{
+  font-family:var(--f-mono);
+  font-size:9px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+}
+.field input{
+  width:100px;
+  padding:11px 14px;
+  border:1px solid rgba(250,250,250,.14);
+  border-radius:10px;
+  background:rgba(250,250,250,.03);
+  color:var(--ink);
+  font-family:var(--f-mono);
+  font-size:14px;
+  letter-spacing:.04em;
+  text-align:center;
+  transition:border-color .2s, background .2s;
+}
+.field input:focus{
+  border-color:var(--brand-bright);
+  background:rgba(8,189,183,.06);
+}
+.field.field-exclude input{ width:240px; text-align:left; }
+.field input[type=number]{ -moz-appearance:textfield; }
+.field input::-webkit-outer-spin-button,
+.field input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+.field-divider{
+  width:14px; height:1px;
+  background:var(--ink-faint);
+  margin:0 2px 18px;
+  align-self:flex-end;
+}
+
+/* stage */
+.stage{
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  padding:0 24px;
+  gap:14px;
+  position:relative;
+  overflow:hidden;
+}
+.spotlight{
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%, -50%);
+  width:min(820px, 95vw); height:min(820px, 95vw);
+  border-radius:50%;
+  background:radial-gradient(closest-side, rgba(8,189,183,.22), transparent 70%);
+  pointer-events:none;
+  filter:blur(40px);
+  opacity:.45;
+  transition:opacity 1s;
+  z-index:0;
+}
+.stage.is-drawing .spotlight{ opacity:1; }
+.stage.is-landed .spotlight{ animation:spotFlash 1.6s cubic-bezier(.2,.7,.2,1); }
+@keyframes spotFlash{
+  0%   { opacity:1; }
+  18%  { opacity:1.5; }
+  100% { opacity:.65; }
+}
+
+.stage-status{
+  font-family:var(--f-mono);
+  font-size:11px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--brand-bright);
+  margin:0;
+  display:inline-flex; align-items:center; gap:14px;
+  min-height:16px;
+  position:relative; z-index:2;
+}
+.stage-status::before{
+  content:""; width:36px; height:1px; background:currentColor; opacity:.6;
+}
+.stage-status.dim{ color:var(--ink-mute); }
+.stage-status.dim::before{ opacity:.3; }
+.stage-status.live::before{
+  animation:livePulseLine 1.2s ease-in-out infinite;
+}
+@keyframes livePulseLine{
+  0%,100%{ opacity:.4; transform:scaleX(.6); transform-origin:left; }
+  50%   { opacity:1;  transform:scaleX(1); }
+}
+
+.number-display{
+  font-family:var(--f-sans);
+  font-weight:200;
+  font-size:clamp(120px, 22vw, 300px);
+  line-height:.9;
+  letter-spacing:-.06em;
+  color:var(--ink);
+  font-variant-numeric:tabular-nums;
+  position:relative;
+  z-index:2;
+  text-shadow:0 0 80px rgba(8,189,183,.15);
+  transition:transform .2s, color .3s;
+  will-change:transform, color;
+  min-width:2ch;
+  text-align:center;
+  margin:6px 0;
+}
+.number-display.idle{ color:var(--ink-faint); font-weight:100; }
+.number-display.spinning{ color:var(--ink-soft); }
+.number-display.landed{
+  color:var(--brand-bright);
+  animation:landPulse 1.6s cubic-bezier(.2,.7,.2,1);
+}
+@keyframes landPulse{
+  0%   { transform:scale(1);    text-shadow:0 0 80px rgba(8,189,183,.15); }
+  28%  { transform:scale(1.08); text-shadow:0 0 200px rgba(8,189,183,.65); }
+  100% { transform:scale(1);    text-shadow:0 0 100px rgba(8,189,183,.3); }
+}
+
+/* draw button */
+.draw-btn{
+  margin:6px 0 0;
+  display:inline-flex; align-items:center; gap:14px;
+  padding:16px 30px;
+  background:var(--brand-bright);
+  color:var(--night);
+  border-radius:999px;
+  font-family:var(--f-sans);
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, background .25s, opacity .3s;
+  box-shadow:0 0 0 0 rgba(8,189,183,0), 0 12px 30px -8px rgba(8,189,183,.45);
+  position:relative; z-index:2;
+}
+.draw-btn:hover:not(:disabled){
+  transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(8,189,183,.18), 0 20px 40px -10px rgba(8,189,183,.55);
+}
+.draw-btn:active:not(:disabled){ transform:translateY(0); }
+.draw-btn:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+  background:var(--night-3);
+  color:var(--ink-mute);
+  box-shadow:none;
+}
+.draw-btn .kbd{
+  font-family:var(--f-mono);
+  font-size:9px;
+  padding:3px 7px;
+  border-radius:5px;
+  background:rgba(10,10,12,.28);
+  letter-spacing:.14em;
+}
+.draw-btn:disabled .kbd{ background:rgba(250,250,250,.05); }
+
+/* secondary actions row */
+.secondary-actions{
+  margin:0;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+  position:relative; z-index:2;
+}
+
+/* end button */
+.end-btn{
+  padding:10px 22px;
+  font-family:var(--f-mono);
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  border:1px solid rgba(250,250,250,.1);
+  border-radius:999px;
+  transition:color .25s, border-color .25s, background .25s, opacity .3s;
+  position:relative; z-index:2;
+}
+.end-btn:hover:not(:disabled){
+  color:var(--ink-soft);
+  border-color:rgba(250,250,250,.25);
+  background:rgba(250,250,250,.03);
+}
+.end-btn:disabled{ cursor:default; opacity:.35; }
+.end-btn.is-closed{
+  color:var(--gold);
+  border-color:rgba(245,180,80,.4);
+  background:rgba(245,180,80,.05);
+  opacity:1;
+}
+.end-btn.is-reset:hover:not(:disabled){
+  color:#ff9b9b;
+  border-color:rgba(255,155,155,.35);
+  background:rgba(255,155,155,.06);
+}
+
+/* prize banner */
+.prize-banner{
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  margin:0;
+  padding:12px 28px 16px;
+  border:1px solid rgba(8,189,183,.22);
+  border-radius:18px;
+  background:rgba(8,189,183,.05);
+  position:relative; z-index:2;
+  text-align:center;
+  max-width:min(720px, 92vw);
+  animation:bannerIn .7s cubic-bezier(.2,.7,.2,1);
+  box-shadow:0 0 60px rgba(8,189,183,.1);
+}
+.prize-banner[hidden]{ display:none; }
+.prize-banner.is-grand{
+  border-color:rgba(245,180,80,.5);
+  background:rgba(245,180,80,.08);
+  box-shadow:0 0 80px rgba(245,180,80,.22);
+}
+@keyframes bannerIn{
+  from{ opacity:0; transform:translateY(10px); }
+  to  { opacity:1; transform:translateY(0); }
+}
+.prize-banner-tag{
+  font-family:var(--f-mono);
+  font-size:clamp(11px, 1.1vw, 13px);
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--brand-bright);
+  font-weight:700;
+  padding:6px 14px;
+  border:1px solid rgba(8,189,183,.4);
+  border-radius:999px;
+  background:rgba(8,189,183,.08);
+}
+.prize-banner.is-grand .prize-banner-tag{
+  color:var(--gold);
+  border-color:rgba(245,180,80,.45);
+  background:rgba(245,180,80,.12);
+}
+.prize-banner-text{
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+}
+.prize-banner-name{
+  font-family:var(--f-sans);
+  font-weight:400;
+  font-size:clamp(24px, 3.2vw, 40px);
+  color:var(--ink);
+  letter-spacing:-.02em;
+  line-height:1.1;
+}
+.prize-banner.is-grand .prize-banner-name{
+  font-weight:500;
+  color:var(--gold);
+}
+.prize-banner-detail{
+  font-family:var(--f-sans);
+  font-weight:300;
+  font-size:clamp(15px, 1.6vw, 21px);
+  color:var(--ink-soft);
+  letter-spacing:-.005em;
+}
+
+/* grand prize stage treatment */
+.stage.is-grand .spotlight{
+  background:radial-gradient(closest-side, rgba(245,180,80,.28), transparent 70%);
+}
+.number-display.grand-land{
+  color:var(--gold);
+  animation:grandLand 1.8s cubic-bezier(.2,.7,.2,1);
+}
+@keyframes grandLand{
+  0%   { transform:scale(1);    text-shadow:0 0 80px rgba(245,180,80,.15); }
+  22%  { transform:scale(1.12); text-shadow:0 0 240px rgba(245,180,80,.7); }
+  100% { transform:scale(1);    text-shadow:0 0 130px rgba(245,180,80,.35); }
+}
+
+/* grand prize draw button */
+.draw-btn.is-grand{
+  background:var(--gold);
+  box-shadow:0 0 0 0 rgba(245,180,80,0), 0 12px 30px -8px rgba(245,180,80,.5);
+}
+.draw-btn.is-grand:hover:not(:disabled){
+  box-shadow:0 0 0 4px rgba(245,180,80,.18), 0 20px 40px -10px rgba(245,180,80,.55);
+}
+
+/* grand prize winner card */
+.winner-card.is-grand{
+  border-color:rgba(245,180,80,.5);
+  background:linear-gradient(180deg, rgba(245,180,80,.12), rgba(245,180,80,.03));
+  box-shadow:0 0 40px rgba(245,180,80,.12);
+}
+.winner-card.is-grand .label{ color:var(--gold); }
+
+/* hide controls on projector */
+body.fullscreen .controls{
+  opacity:0; pointer-events:none;
+}
+
+/* winners */
+.winners{
+  padding:14px 24px 6px;
+  display:flex; flex-direction:column; align-items:center; gap:12px;
+  position:relative; z-index:2;
+}
+.winners[hidden]{ display:none; }
+.winners-title{
+  font-family:var(--f-mono);
+  font-size:10px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  display:inline-flex; align-items:center; gap:14px;
+}
+.winners-title::before, .winners-title::after{
+  content:""; width:36px; height:1px; background:currentColor; opacity:.35;
+}
+.winners-list{
+  display:flex; gap:14px; flex-wrap:wrap; justify-content:center;
+  max-width:1200px;
+}
+.winner-card{
+  min-width:150px;
+  padding:12px 18px;
+  border:1px solid rgba(8,189,183,.28);
+  border-radius:12px;
+  background:linear-gradient(180deg, rgba(8,189,183,.08), rgba(8,189,183,.02));
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  display:flex; flex-direction:column; gap:4px;
+  animation:cardIn .7s cubic-bezier(.2,.7,.2,1);
+  position:relative;
+}
+@keyframes cardIn{
+  from{ opacity:0; transform:translateY(16px) scale(.96); }
+  to  { opacity:1; transform:translateY(0) scale(1); }
+}
+.winner-card .label{
+  font-family:var(--f-mono);
+  font-size:9px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--brand-bright);
+}
+.winner-card .num{
+  font-family:var(--f-sans);
+  font-weight:300;
+  font-size:36px;
+  letter-spacing:-.03em;
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+  color:var(--ink);
+}
+.winner-card .prize{
+  font-family:var(--f-sans);
+  font-weight:400;
+  font-size:12px;
+  color:var(--ink-soft);
+  max-width:220px;
+  line-height:1.35;
+}
+.winner-card .time{
+  font-family:var(--f-mono);
+  font-size:9px;
+  letter-spacing:.2em;
+  color:var(--ink-faint);
+  text-transform:uppercase;
+}
+
+/* helper bar */
+.helper{
+  position:fixed;
+  bottom:18px; left:50%;
+  transform:translateX(-50%);
+  display:inline-flex; gap:18px;
+  font-family:var(--f-mono);
+  font-size:9px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  z-index:65;
+  padding:10px 18px;
+  border:1px solid rgba(250,250,250,.08);
+  border-radius:999px;
+  background:rgba(10,10,12,.55);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  transition:opacity .4s;
+}
+.helper span{ display:inline-flex; align-items:center; gap:6px; }
+.helper .kbd{
+  padding:2px 6px;
+  border-radius:4px;
+  background:rgba(250,250,250,.08);
+  color:var(--ink-soft);
+  letter-spacing:.14em;
+}
+
+/* fullscreen mode */
+body.fullscreen .nav-bar,
+body.fullscreen .helper{
+  opacity:0; pointer-events:none;
+}
+
+/* confetti */
+.confetti{
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:55;
+  overflow:hidden;
+}
+.confetti i{
+  position:absolute;
+  width:8px; height:12px;
+  top:0; left:0;
+  background:var(--brand-bright);
+  opacity:0;
+  will-change:transform, opacity;
+}
+.confetti i.gold{ background:var(--gold); }
+.confetti i.ink{  background:var(--ink); }
+
+/* mobile */
+@media (max-width: 700px){
+  .nav-bar{ padding:14px 18px; }
+  .controls{ gap:10px; padding-top:8px; }
+  .field input{ width:92px; padding:10px; }
+  .field.field-exclude{ flex-basis:100%; display:flex; align-items:center; }
+  .field.field-exclude input{ width:100%; max-width:340px; }
+  .field-divider{ display:none; }
+  .number-display{ font-size:clamp(120px, 40vw, 280px); }
+  .draw-btn{ margin-top:24px; padding:16px 26px; }
+  .winners-list{ flex-direction:column; align-items:stretch; }
+  .winner-card{ min-width:auto; width:100%; max-width:320px; margin:0 auto; }
+  .helper{ font-size:8px; gap:10px; padding:8px 12px; }
+  main{ padding-bottom:90px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- kasastay mark -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="kasastay-mark" viewBox="20 5 110 130">
+      <path d="M68.8741 10.2154C78.1336 9.33872 87.6005 11.1602 95.8926 15.274C103.908 19.1855 110.68 25.3224 115.448 32.7408C120.354 40.3615 122.981 49.2636 122.981 58.0982V58.1656C122.981 58.9748 122.98 59.8515 122.911 60.7281C122.427 68.3487 120.147 75.6325 116.969 82.5787C113.928 89.2553 109.921 95.5278 105.498 101.395C101.283 107.06 96.6523 112.388 91.7461 117.446C88.2221 121.088 84.4909 124.595 80.6905 127.966C79.1703 129.315 77.6499 130.664 76.0606 131.878C74.3331 133.226 72.5364 133.159 70.878 131.878C70.8088 131.81 70.6704 131.743 70.5323 131.608C67.7683 129.383 65.1425 127.09 62.5167 124.662C57.6105 120.143 52.912 115.354 48.5586 110.296C43.0997 104.025 37.9859 97.3484 33.8399 90.1324C29.6248 82.9838 26.2383 75.0934 24.7872 66.9332C23.2669 58.2334 23.9586 49.1961 27.2754 40.901C30.7304 32.4712 36.3272 25.2552 43.7208 19.7252C51.0455 14.2625 59.8218 11.0921 68.8741 10.2154ZM75.0245 17.0943C72.8133 17.0269 70.6018 17.0951 68.3907 17.3648C68.1144 17.3648 67.8378 17.4321 67.5616 17.4322C67.0088 17.4997 66.5245 17.6343 65.9717 17.7017C64.9353 17.9041 63.8988 18.1059 62.8624 18.3756C60.8584 18.8477 58.9232 19.5224 56.9883 20.2642C56.8503 20.3316 56.781 20.3316 56.712 20.399C56.5048 20.5338 56.2288 20.6685 56.0215 20.7359C55.5378 20.9383 55.1224 21.2084 54.6387 21.4107C53.7406 21.8153 52.8425 22.2874 51.9444 22.8267C51.1152 23.3663 50.2169 23.9064 49.3877 24.4459C48.9731 24.7831 48.4889 25.053 48.0743 25.3902C47.9363 25.4576 47.8669 25.525 47.7979 25.5924H47.6602C47.5911 25.5924 47.5213 25.6597 47.4522 25.7271C45.7941 27.0083 44.2742 28.357 42.8233 29.8404C42.0633 30.5822 41.3719 31.3243 40.75 32.066C40.5428 32.3358 40.3353 32.5385 40.128 32.8082L40.0586 32.8756V32.8082C39.9896 32.8756 39.9206 32.943 39.8516 33.0777C39.8516 33.1436 39.7853 33.2095 39.7823 33.2125C39.6441 33.4148 39.5064 33.6176 39.3682 33.8199C38.6081 34.899 37.778 36.0454 37.087 37.2594C36.7416 37.7987 36.4655 38.3382 36.1202 38.9449C35.6365 39.8216 35.1529 40.7664 34.7383 41.6432C34.6002 41.9128 34.5307 42.1821 34.3926 42.4517C34.1853 42.9238 33.9781 43.3967 33.8399 43.8687C33.1489 45.757 32.5269 47.7128 32.1124 49.7359C31.9051 50.7473 31.6978 51.6913 31.5596 52.6353C31.4905 52.7028 31.4903 52.8384 31.4903 52.9732C31.4902 53.2428 31.421 53.5123 31.4209 53.7818C31.3518 54.3213 31.2833 54.7941 31.2833 55.2662C31.1451 57.2893 31.1451 59.3125 31.2833 61.3355C31.3523 61.8075 31.3519 62.347 31.4209 62.8189C31.4209 63.0213 31.4903 63.224 31.4903 63.4264V63.359C31.5594 64.303 31.7664 65.3144 31.9737 66.2584C32.3192 68.2141 32.8721 70.0351 33.4249 71.9234C33.9777 73.7443 34.6686 75.5654 35.4288 77.3863C35.4978 77.5212 35.4983 77.5884 35.5674 77.7232V77.7906C35.5674 77.8579 35.6365 77.9254 35.6368 77.9928C35.7059 78.1276 35.7745 78.2633 35.7745 78.2633C35.9817 78.6678 36.1199 79.0726 36.3272 79.4771C36.7418 80.4212 37.157 81.3651 37.6407 82.2418C38.7463 84.3998 39.9203 86.4911 41.1641 88.5142C41.9933 89.9304 42.8919 91.2788 43.7901 92.6275C44.8956 94.3134 46.0705 95.9319 47.2452 97.5504C47.8671 98.3597 48.4895 99.1698 49.1114 99.9791C49.1803 100.046 49.2494 100.114 49.3184 100.249C49.2559 100.188 49.2496 100.182 49.2491 100.181C49.3182 100.249 49.4563 100.451 49.5254 100.518C49.8018 100.923 50.1475 101.327 50.4239 101.665C52.7732 104.564 55.2608 107.397 57.8174 110.094C61.8252 114.343 66.0405 118.457 70.4629 122.369C71.4304 123.178 72.3295 123.987 73.2969 124.796C74.3333 123.987 75.3697 123.111 76.337 122.234C80.2757 118.727 84.076 115.018 87.7383 111.173C90.0186 108.746 92.23 106.318 94.3721 103.755C94.9249 103.148 95.4785 102.474 96.0313 101.799C96.3076 101.462 96.5841 101.125 96.8604 100.788C96.9985 100.653 97.1364 100.518 97.2745 100.316C97.3357 100.256 97.343 100.249 97.3438 100.249C98.3803 98.8324 99.4167 97.4832 100.453 96.067C102.25 93.5717 103.977 91.0761 105.566 88.4459C105.912 87.9064 106.258 87.4346 106.534 86.8951C107.433 85.344 108.331 83.7256 109.16 82.107C109.575 81.2978 109.99 80.4885 110.335 79.6793C110.611 79.2072 110.75 78.8027 110.957 78.398C110.957 78.3307 111.025 78.3303 111.025 78.2633V78.1959C111.025 78.1959 111.095 78.1276 111.095 78.0601C111.164 77.9928 111.164 77.9928 111.164 77.9254C112.615 74.6209 113.721 71.2485 114.55 67.8092C114.757 66.9326 114.964 66.0559 115.103 65.1793C115.172 64.7747 115.241 64.3026 115.31 63.898V63.7633C115.379 63.6285 115.379 63.561 115.379 63.4264C115.586 61.7404 115.656 59.9864 115.587 58.233C115.587 57.2214 115.517 56.1421 115.448 54.9957C115.448 54.5237 115.379 53.9843 115.31 53.4449C115.31 53.1752 115.31 52.9051 115.241 52.6353V52.568C114.965 50.5448 114.55 48.5217 113.928 46.566C113.651 45.6219 113.306 44.6098 112.961 43.6656C112.754 43.1936 112.616 42.7216 112.408 42.2496V42.1822C112.27 41.98 112.132 41.7107 112.063 41.5084C111.372 40.0248 110.611 38.6081 109.782 37.2594C109.575 36.8547 109.367 36.5175 109.091 36.1129C108.538 35.2362 107.985 34.427 107.363 33.6178C107.225 33.4829 107.087 33.3474 107.018 33.2125L106.949 33.1451L106.811 33.0103C106.534 32.6732 106.189 32.2684 105.912 31.9312C104.599 30.3802 103.148 28.8962 101.628 27.5475C100.868 26.8731 100.108 26.1993 99.2784 25.5924C99.2093 25.5249 99.209 25.525 99.209 25.525C99.0018 25.3902 98.7951 25.2545 98.5879 25.1197C98.1734 24.7826 97.7583 24.5134 97.3438 24.2437C95.6163 23.0973 93.8882 22.0853 92.0225 21.2086C91.4698 20.9389 90.9863 20.6687 90.4336 20.4664C90.2264 20.3316 90.0881 20.2643 89.8809 20.1969H89.7422C88.844 19.8597 87.8765 19.5223 86.9092 19.1851C84.8363 18.5108 82.7634 18.039 80.6905 17.6344C80.1377 17.4995 79.6534 17.4323 79.1006 17.3648H79.0323C78.825 17.3648 78.5482 17.2965 78.3409 17.2965C77.2354 17.229 76.1299 17.1618 75.0245 17.0943ZM73.2969 31.19C73.5733 31.19 73.8496 31.19 74.126 31.2574L76.752 33.2125L77.0977 33.483L82.1417 37.3267H82.211V35.3707C82.2111 34.2917 82.9714 33.4148 84.0079 33.2125H93.129C94.1654 33.4148 94.9258 34.2917 94.9258 35.3707V46.9029L98.5186 49.6685L104.393 54.1197L104.807 54.4566C105.359 54.9286 105.636 55.5353 105.705 56.2096C105.705 56.4119 105.637 56.682 105.567 56.8844C105.36 57.4913 104.876 57.9633 104.323 58.1656H98.5186V86.356C98.173 87.0977 97.4128 87.6373 96.5147 87.6373H50.4932C49.2496 87.6372 48.2824 86.6929 48.2823 85.4791V58.0982H42.754C42.2012 57.8959 41.7171 57.4239 41.5098 56.817C41.4407 56.6147 41.3721 56.4119 41.3721 56.1422C41.3722 55.5353 41.6486 54.8612 42.2012 54.4566L42.6163 54.1197L47.3145 50.5445L48.2823 49.8707L52.4288 46.7682L65.212 37.2594L70.2569 33.483L70.6016 33.2125L73.2969 31.19ZM73.4346 36.0455L71.9844 37.192L52.4288 51.8267L49.3877 54.1197H52.4288V83.3883H94.3731V53.984H97.7588L94.2344 51.3541L90.4336 48.5221L84.0762 43.733L75.2315 37.1246L73.5733 35.9107L73.4346 36.0455ZM72.0655 76.0465H62.9014V67.1031H72.0655V76.0465ZM84.1065 67.1031V76.0465H74.9424V67.1031H84.1065ZM72.0655 64.6598H62.9014V55.7164H72.0655V64.6598ZM84.1065 64.6598H74.9424V55.7164H84.1065V64.6598ZM86.7022 40.6314L90.4336 43.4635V37.5289H86.7022V40.6314Z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="nav-bar">
+  <a class="nav-back" href="./">
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+    Retour
+  </a>
+  <span class="nav-brand">
+    <svg class="icon" aria-hidden="true"><use href="#kasastay-mark"/></svg>
+    <span>kasastay</span>
+    <span class="tag">Tombola</span>
+  </span>
+</header>
+
+<main>
+  <section class="controls">
+    <div class="field">
+      <label for="rangeStart">Du n°</label>
+      <input id="rangeStart" type="number" inputmode="numeric" min="1" value="1" />
+    </div>
+    <span class="field-divider" aria-hidden="true"></span>
+    <div class="field">
+      <label for="rangeEnd">Au n°</label>
+      <input id="rangeEnd" type="number" inputmode="numeric" min="1" value="200" />
+    </div>
+    <div class="field field-exclude">
+      <label for="excludes">Exclure</label>
+      <input id="excludes" type="text" placeholder="ex. 1-10, 47" maxlength="120" />
+    </div>
+  </section>
+
+  <section class="stage" id="stage">
+    <span class="spotlight" aria-hidden="true"></span>
+    <p class="slogan">Vous dormez <em>où ce soir ?</em></p>
+    <span class="stage-status dim" id="status">Prêt pour le tirage</span>
+    <div class="prize-banner" id="prizeBanner" hidden>
+      <span class="prize-banner-tag" id="prizeBannerTag"></span>
+      <span class="prize-banner-text">
+        <span class="prize-banner-name" id="prizeBannerName"></span>
+        <span class="prize-banner-detail" id="prizeBannerDetail"></span>
+      </span>
+    </div>
+    <div class="number-display idle" id="numberDisplay">···</div>
+    <button class="draw-btn" id="drawBtn" type="button">
+      <span id="drawBtnLabel">Lancer le tirage</span>
+      <span class="kbd">espace</span>
+    </button>
+    <div class="secondary-actions">
+      <button class="end-btn is-reset" id="resetBtn" type="button" disabled>Recommencer</button>
+      <button class="end-btn" id="endBtn" type="button">Clôturer le tirage</button>
+    </div>
+  </section>
+
+  <section class="winners" id="winnersSection" hidden>
+    <span class="winners-title">Gagnants</span>
+    <div class="winners-list" id="winnersList"></div>
+  </section>
+</main>
+
+<div class="helper" aria-hidden="true">
+  <span><span class="kbd">espace</span> tirer</span>
+  <span><span class="kbd">F</span> plein écran</span>
+  <span><span class="kbd">R</span> recommencer</span>
+</div>
+
+<div class="confetti" id="confetti" aria-hidden="true"></div>
+
+<script>
+(function tombola(){
+  const startInput   = document.getElementById('rangeStart');
+  const endInput     = document.getElementById('rangeEnd');
+  const excludesInput= document.getElementById('excludes');
+  const drawBtn      = document.getElementById('drawBtn');
+  const drawBtnLabel = document.getElementById('drawBtnLabel');
+  const numberDisplay= document.getElementById('numberDisplay');
+  const status       = document.getElementById('status');
+  const stage        = document.getElementById('stage');
+  const winnersSection = document.getElementById('winnersSection');
+  const winnersList  = document.getElementById('winnersList');
+  const confettiRoot = document.getElementById('confetti');
+  const prizeBanner  = document.getElementById('prizeBanner');
+  const prizeBannerTag = document.getElementById('prizeBannerTag');
+  const prizeBannerName = document.getElementById('prizeBannerName');
+  const prizeBannerDetail = document.getElementById('prizeBannerDetail');
+  const endBtn       = document.getElementById('endBtn');
+  const resetBtn     = document.getElementById('resetBtn');
+
+  const prizeQueue = [
+    { tag: 'Lot 1 sur 4',                 name: 'Weekend Kasastay', detail: 'petit-déjeuner inclus', grand: false },
+    { tag: 'Lot 2 sur 4',                 name: 'Weekend Kasastay', detail: 'petit-déjeuner inclus', grand: false },
+    { tag: 'Lot 3 sur 4',                 name: 'Weekend Kasastay', detail: 'petit-déjeuner inclus', grand: false },
+    { tag: 'Grand prix · Lot 4 sur 4',    name: 'Weekend à Kribi',  detail: 'tout frais payés',       grand: true  }
+  ];
+
+  const drawn = new Set();
+  let isDrawing = false;
+  let isClosed = false;
+
+  function readRange(){
+    const a = parseInt(startInput.value, 10);
+    const b = parseInt(endInput.value, 10);
+    if (!Number.isFinite(a) || !Number.isFinite(b)) return null;
+    if (a < 1 || b < 1) return null;
+    if (b < a) return null;
+    return { start:a, end:b };
+  }
+
+  function parseExclusions(){
+    const str = excludesInput.value.trim();
+    const set = new Set();
+    if (!str) return set;
+    const parts = str.split(/[,;\s]+/);
+    for (const part of parts){
+      if (!part) continue;
+      const range = part.match(/^(\d+)-(\d+)$/);
+      if (range){
+        const a = parseInt(range[1], 10);
+        const b = parseInt(range[2], 10);
+        if (Number.isFinite(a) && Number.isFinite(b)){
+          const lo = Math.min(a, b);
+          const hi = Math.max(a, b);
+          for (let i = lo; i <= hi; i++) set.add(i);
+        }
+      } else {
+        const n = parseInt(part, 10);
+        if (Number.isFinite(n)) set.add(n);
+      }
+    }
+    return set;
+  }
+
+  function availableNumbers(range){
+    const excluded = parseExclusions();
+    const pool = [];
+    for (let i = range.start; i <= range.end; i++){
+      if (drawn.has(i)) continue;
+      if (excluded.has(i)) continue;
+      pool.push(i);
+    }
+    return pool;
+  }
+
+  function currentPrize(){
+    return prizeQueue[drawn.size] || null;
+  }
+
+  function updatePrizeBanner(){
+    const prize = currentPrize();
+    if (!prize || isClosed){
+      prizeBanner.hidden = true;
+      return;
+    }
+    prizeBanner.hidden = false;
+    prizeBanner.classList.toggle('is-grand', !!prize.grand);
+    prizeBannerTag.textContent = prize.tag;
+    prizeBannerName.textContent = prize.name;
+    prizeBannerDetail.textContent = prize.detail;
+  }
+
+  function setStatus(text, mode){
+    status.textContent = text;
+    status.classList.remove('dim', 'live');
+    if (mode === 'live')  status.classList.add('live');
+    if (mode === 'dim')   status.classList.add('dim');
+  }
+
+  function refresh(){
+    updatePrizeBanner();
+    resetBtn.disabled = !(drawn.size > 0 || isClosed);
+    if (isClosed){
+      drawBtn.disabled = true;
+      drawBtn.classList.remove('is-grand');
+      drawBtnLabel.textContent = 'Tirage clôturé';
+      startInput.disabled = true;
+      endInput.disabled = true;
+      excludesInput.disabled = true;
+      const n = drawn.size;
+      setStatus(`Clôturé · ${n} gagnant${n > 1 ? 's' : ''}`, 'dim');
+      return;
+    }
+    if (isDrawing){ drawBtn.disabled = true; return; }
+    const range = readRange();
+    if (!range){
+      drawBtn.disabled = true;
+      drawBtn.classList.remove('is-grand');
+      drawBtnLabel.textContent = 'Plage non valide';
+      setStatus('Renseignez une plage valide', 'dim');
+      return;
+    }
+    const pool = availableNumbers(range);
+    if (pool.length === 0){
+      drawBtn.disabled = true;
+      drawBtn.classList.remove('is-grand');
+      drawBtnLabel.textContent = 'Plage épuisée';
+      setStatus('Tous les numéros ont été tirés', 'dim');
+      return;
+    }
+    drawBtn.disabled = false;
+    const prize = currentPrize();
+    drawBtn.classList.toggle('is-grand', !!(prize && prize.grand));
+    if (!prize){
+      drawBtnLabel.textContent = 'Tirage bonus';
+    } else if (prize.grand){
+      drawBtnLabel.textContent = 'Lancer le grand prix';
+    } else {
+      drawBtnLabel.textContent = drawn.size === 0 ? 'Lancer le tirage' : 'Tirage suivant';
+    }
+    const excluded = parseExclusions();
+    let excludedInRange = 0;
+    excluded.forEach(n => { if (n >= range.start && n <= range.end) excludedInRange++; });
+    const suffix = excludedInRange > 0 ? ` · ${excludedInRange} exclus` : '';
+    if (drawn.size === 0){
+      setStatus(`Prêt · ${pool.length} numéros${suffix}`, 'dim');
+    } else {
+      setStatus(`${drawn.size} gagnant${drawn.size > 1 ? 's' : ''} · ${pool.length} restants`, 'dim');
+    }
+  }
+
+  function closeTombola(){
+    if (isClosed) return;
+    if (drawn.size === 0){
+      if (!confirm('Aucun tirage n’a encore eu lieu. Clôturer quand même ?')) return;
+    } else {
+      if (!confirm('Clôturer le tirage ? Plus aucun nouveau tirage ne sera possible.')) return;
+    }
+    isClosed = true;
+    endBtn.textContent = 'Tirage clôturé';
+    endBtn.classList.add('is-closed');
+    endBtn.disabled = true;
+    refresh();
+  }
+  endBtn.addEventListener('click', closeTombola);
+
+  function pickRandom(pool){
+    // crypto for fairness
+    if (window.crypto && crypto.getRandomValues){
+      const buf = new Uint32Array(1);
+      crypto.getRandomValues(buf);
+      return pool[buf[0] % pool.length];
+    }
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+
+  function formatTime(){
+    const d = new Date();
+    return String(d.getHours()).padStart(2,'0') + 'h' + String(d.getMinutes()).padStart(2,'0');
+  }
+
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+  }
+
+  function addWinner(num, prize){
+    winnersSection.hidden = false;
+    const card = document.createElement('div');
+    const grand = !!(prize && prize.grand);
+    card.className = 'winner-card' + (grand ? ' is-grand' : '');
+    const idx = winnersList.children.length + 1;
+    const labelText = grand ? 'Grand prix' : ('Gagnant ' + idx);
+    const prizeText = prize ? prize.name + ' · ' + prize.detail : '';
+    card.innerHTML =
+      '<span class="label">' + labelText + '</span>' +
+      '<span class="num">' + num + '</span>' +
+      (prizeText ? '<span class="prize">' + escapeHtml(prizeText) + '</span>' : '') +
+      '<span class="time">' + formatTime() + '</span>';
+    winnersList.appendChild(card);
+  }
+
+  function burstConfetti(isGrand){
+    const variants = isGrand ? ['gold', 'gold', 'gold', 'ink'] : ['', 'gold', 'ink'];
+    const count = isGrand ? 130 : 70;
+    for (let i = 0; i < count; i++){
+      const piece = document.createElement('i');
+      piece.className = variants[Math.floor(Math.random() * variants.length)];
+      const startX = 35 + Math.random() * 30;   // vw
+      const drift  = (Math.random() - 0.5) * 70; // vw
+      const duration = 2400 + Math.random() * 1600;
+      const delay = Math.random() * 300;
+      const rot = Math.random() * 1080 - 540;
+      piece.style.left = startX + 'vw';
+      piece.style.top  = '38vh';
+      piece.animate([
+        { transform: 'translate(0,0) rotate(0deg)', opacity: 0 },
+        { transform: 'translate(' + (drift*0.18) + 'vw, -12vh) rotate(' + (rot*0.18) + 'deg)', opacity: 1, offset: 0.08 },
+        { transform: 'translate(' + drift + 'vw, 72vh) rotate(' + rot + 'deg)', opacity: 0 }
+      ], { duration, delay, easing:'cubic-bezier(.2,.7,.4,1)', fill:'forwards' });
+      confettiRoot.appendChild(piece);
+      setTimeout(() => piece.remove(), duration + delay + 100);
+    }
+  }
+
+  function drawNumber(){
+    if (isDrawing || isClosed) return;
+    const range = readRange();
+    if (!range) return;
+    const pool = availableNumbers(range);
+    if (pool.length === 0) return;
+
+    const prize = currentPrize();
+    const isGrand = !!(prize && prize.grand);
+
+    isDrawing = true;
+    drawBtn.disabled = true;
+    stage.classList.remove('is-landed', 'is-grand');
+    stage.classList.add('is-drawing');
+    if (isGrand) stage.classList.add('is-grand');
+    numberDisplay.classList.remove('idle', 'landed', 'grand-land');
+    numberDisplay.classList.add('spinning');
+    setStatus(isGrand ? 'Grand prix · tirage en cours' : 'Tirage en cours', 'live');
+
+    const finalNum = pickRandom(pool);
+    const duration = isGrand ? 4500 : 3000;
+    const start = performance.now();
+    let lastSwap = 0;
+    let last = -1;
+
+    function frame(now){
+      const elapsed = now - start;
+      const t = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(t);
+      const swapInterval = 32 + eased * 280;
+
+      if (now - lastSwap >= swapInterval){
+        let shown;
+        if (t > 0.94){
+          shown = finalNum;
+        } else {
+          do { shown = pool[Math.floor(Math.random() * pool.length)]; }
+          while (shown === last && pool.length > 1);
+        }
+        numberDisplay.textContent = shown;
+        last = shown;
+        lastSwap = now;
+      }
+
+      if (t < 1){
+        requestAnimationFrame(frame);
+      } else {
+        numberDisplay.textContent = finalNum;
+        numberDisplay.classList.remove('spinning');
+        numberDisplay.classList.add(isGrand ? 'grand-land' : 'landed');
+        stage.classList.remove('is-drawing');
+        stage.classList.add('is-landed');
+        drawn.add(finalNum);
+        addWinner(finalNum, prize);
+        setStatus((isGrand ? 'Grand prix · numéro ' : 'Gagnant · numéro ') + finalNum, '');
+        burstConfetti(isGrand);
+        setTimeout(() => {
+          isDrawing = false;
+          refresh();
+        }, isGrand ? 1800 : 1200);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  drawBtn.addEventListener('click', drawNumber);
+  startInput.addEventListener('input', refresh);
+  endInput.addEventListener('input', refresh);
+  excludesInput.addEventListener('input', refresh);
+
+  document.addEventListener('keydown', (e) => {
+    const inField = e.target.tagName === 'INPUT';
+    if (inField){
+      if (e.key === 'Enter'){
+        e.target.blur();
+      }
+      return;
+    }
+    if (e.key === 'f' || e.key === 'F'){
+      toggleFullscreen();
+      return;
+    }
+    if (e.key === 'r' || e.key === 'R'){
+      resetAll();
+      return;
+    }
+    if (isClosed) return;
+    if (e.code === 'Space'){
+      e.preventDefault();
+      drawNumber();
+    }
+  });
+
+  function toggleFullscreen(){
+    if (!document.fullscreenElement){
+      document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen && document.exitFullscreen();
+    }
+  }
+  document.addEventListener('fullscreenchange', () => {
+    document.body.classList.toggle('fullscreen', !!document.fullscreenElement);
+  });
+
+  function resetAll(){
+    if (isDrawing) return;
+    if (drawn.size === 0 && !isClosed) return;
+    const msg = isClosed
+      ? 'Le tirage est clôturé. Recommencer effacera les gagnants et déverrouillera la page.'
+      : 'Recommencer le tirage ? Tous les gagnants seront effacés.';
+    if (!confirm(msg)) return;
+    drawn.clear();
+    winnersList.innerHTML = '';
+    winnersSection.hidden = true;
+    numberDisplay.textContent = '···';
+    numberDisplay.classList.remove('landed', 'grand-land', 'spinning');
+    numberDisplay.classList.add('idle');
+    stage.classList.remove('is-drawing', 'is-landed', 'is-grand');
+    if (isClosed){
+      isClosed = false;
+      endBtn.disabled = false;
+      endBtn.classList.remove('is-closed');
+      endBtn.textContent = 'Clôturer le tirage';
+      startInput.disabled = false;
+      endInput.disabled = false;
+      excludesInput.disabled = false;
+    }
+    refresh();
+  }
+  resetBtn.addEventListener('click', resetAll);
+
+  refresh();
+})();
+</script>
+</body>
+</html>
